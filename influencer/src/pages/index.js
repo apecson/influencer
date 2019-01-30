@@ -2,9 +2,14 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import Helmet from 'react-helmet'
+import classnames from 'classnames'
+
 import Hero from '../components/hero/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview/article-preview'
+import Sidebar from '../components/sidebar/sidebar'
+
+import styles from './styles.module.css';
 
 class RootIndex extends React.Component {
   render() {
@@ -14,20 +19,19 @@ class RootIndex extends React.Component {
 
     return (
       <Layout location={this.props.location} >
-        <div style={{ background: '#fff' }}>
+        <div>
           <Helmet title={siteTitle} />
-          {/* <Hero data={author.node} /> */}
-          <div className="wrapper">
-            {/* <h2 className="section-headline"></h2> */}
-            <ul className="article-list">
-              {posts.map(({ node }) => {
+          <div className="wrapper row">
+            <ul className={classnames('article-list', 'col-md-8')}>
+              {posts.map(({ node }, i) => {
                 return (
-                  <li key={node.slug}>
+                  <li key={node.slug} className="teaser">
                     <ArticlePreview article={node} />
                   </li>
                 )
               })}
             </ul>
+            <Sidebar />
           </div>
         </div>
       </Layout>
@@ -39,46 +43,46 @@ export default RootIndex
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
-      edges {
+          allContentfulBlogPost(sort: {fields: [publishDate], order: DESC }) {
+          edges {
         node {
           title
           slug
-          publishDate(formatString: "MMMM Do, YYYY")
-          tags
+        publishDate(formatString: "MMMM Do, YYYY")
+        tags
           heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-             ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
-          description {
-            childMarkdownRemark {
-              html
-            }
-          }
+          fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+          ...GatsbyContentfulFluid_tracedSVG
         }
+        }
+          description {
+          childMarkdownRemark {
+        html
       }
     }
-    allContentfulPerson(filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }) {
-      edges {
+  }
+}
+}
+    allContentfulPerson(filter: {contentful_id: {eq: "15jwOBqpxqSAOy2eOO4S0m" } }) {
+          edges {
         node {
           name
           shortBio {
-            shortBio
-          }
-          title
+          shortBio
+        }
+        title
           heroImage: image {
-            fluid(
-              maxWidth: 1180
-              maxHeight: 480
-              resizingBehavior: PAD
-              background: "rgb:000000"
+          fluid(
+            maxWidth: 1180
+    maxHeight: 480
+    resizingBehavior: PAD
+    background: "rgb:000000"
             ) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
+          ...GatsbyContentfulFluid_tracedSVG
+        }
         }
       }
     }
   }
+}
 `

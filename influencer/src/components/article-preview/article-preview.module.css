@@ -1,10 +1,25 @@
-.previewTitle {
+.teaser {
+  background: #FFF;
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px;
+  position: relative;
+  border-radius: 3px;
+}
+.teaser__title {
   font-size: 1.5em;
 }
-
-.tag {
+.teaser__link {
+  text-decoration: none;
+}
+.tag__list {
+  margin: 0;
+  padding: 0;
+}
+.tag__item {
   color: #A0A0A0;
   text-decoration: none;
+  font-size: 12px;
   display: inline-block;
   padding: .33333rem .5rem;
   line-height: 1;
